@@ -95,7 +95,7 @@ public class AdUrlGenerator extends BaseUrlGenerator {
         setIsoCountryCode(mTelephonyManager.getNetworkCountryIso());
         setCarrierName(mTelephonyManager.getNetworkOperatorName());
 
-        setNetworkType(getActiveNetworkType());
+ //       setNetworkType(getActiveNetworkType());
 
         setAppVersion(getAppVersionFromContext(mContext));
 
@@ -165,25 +165,25 @@ public class AdUrlGenerator extends BaseUrlGenerator {
         addParam("cn", networkOperatorName);
     }
 
-    private void setNetworkType(int type) {
-        switch(type) {
-            case TYPE_ETHERNET:
-                addParam("ct", ETHERNET);
-                break;
-            case TYPE_WIFI:
-                addParam("ct", WIFI);
-                break;
-            case TYPE_MOBILE:
-            case TYPE_MOBILE_DUN:
-            case TYPE_MOBILE_HIPRI:
-            case TYPE_MOBILE_MMS:
-            case TYPE_MOBILE_SUPL:
-                addParam("ct", MOBILE);
-                break;
-            default:
-                addParam("ct", UNKNOWN);
-        }
-    }
+//    private void setNetworkType(int type) {
+//        switch(type) {
+//            case TYPE_ETHERNET:
+//                addParam("ct", ETHERNET);
+//                break;
+//            case TYPE_WIFI:
+//                addParam("ct", WIFI);
+//                break;
+//            case TYPE_MOBILE:
+//            case TYPE_MOBILE_DUN:
+//            case TYPE_MOBILE_HIPRI:
+//            case TYPE_MOBILE_MMS:
+//            case TYPE_MOBILE_SUPL:
+//                addParam("ct", MOBILE);
+//                break;
+//            default:
+//                addParam("ct", UNKNOWN);
+//        }
+//    }
 
     private void addParam(String key, MoPubNetworkType value) {
         addParam(key, value.toString());
@@ -229,12 +229,12 @@ public class AdUrlGenerator extends BaseUrlGenerator {
         }
     }
 
-    private int getActiveNetworkType() {
-        if (mContext.checkCallingOrSelfPermission(ACCESS_NETWORK_STATE) == PERMISSION_GRANTED) {
-            return mConnectivityManager.getActiveNetworkInfo().getType();
-        }
-        return ConnectivityManager.TYPE_DUMMY; // Will generate the "unknown" code
-    }
+//    private int getActiveNetworkType() {
+//        if (mContext.checkCallingOrSelfPermission(ACCESS_NETWORK_STATE) == PERMISSION_GRANTED) {
+//            return mConnectivityManager.getActiveNetworkInfo().getType();
+//        }
+//        return ConnectivityManager.TYPE_DUMMY; // Will generate the "unknown" code
+//    }
 
     private static String addKeyword(String keywords, String addition) {
         if (addition == null || addition.length() == 0) {

@@ -1,5 +1,6 @@
 package com.mopub.mobileads;
 
+import com.achievemint.androidsdk2.R;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
