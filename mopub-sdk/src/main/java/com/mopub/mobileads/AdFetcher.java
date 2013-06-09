@@ -43,8 +43,9 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -59,6 +60,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*
  * AdFetcher is a delegate of an AdView that handles loading ad data over a
@@ -202,10 +205,25 @@ public class AdFetcher {
             return result;
         }
 
-        private AdFetchResult fetch(String url) throws Exception {
-            HttpGet httpget = new HttpGet(url);
-            httpget.addHeader(USER_AGENT_HEADER, mAdFetcher.mUserAgent);
+        public AdFetchResult fetch(String url) throws Exception {
+        	// remove id and put it in post
+        	
+        	Pattern p = Pattern.compile("(?<=[?&;])(id=.*?)($|[&;])");
+        	Matcher m = p.matcher(url);
+        	String idvalue = null;
+        	if (m.find()) {
+        		idvalue = m.group(1);
+        		Log.d("MoPub", "Find the group: "+idvalue);
+        	} else
+        		Log.d("MoPub", "Group not found in the URL");
 
+        	url = m.replaceAll("");
+        	
+            HttpPost httppost = new HttpPost(url);
+            httppost.addHeader(USER_AGENT_HEADER, mAdFetcher.mUserAgent);
+            httppost.addHeader("Content-Type",  "application/x-www-form-urlencoded");
+            httppost.setEntity(new StringEntity(idvalue));
+            
             // We check to see if this AsyncTask was cancelled, as per
             // http://developer.android.com/reference/android/os/AsyncTask.html
             if (isCancelled()) {
@@ -218,7 +236,7 @@ public class AdFetcher {
                 return null;
             }
 
-            HttpResponse response = mHttpClient.execute(httpget);
+            HttpResponse response = mHttpClient.execute(httppost);
             HttpEntity entity = response.getEntity();
 
             if (response == null || entity == null) {
@@ -472,7 +490,7 @@ public class AdFetcher {
 
     }
 
-    private static abstract class AdFetchResult {
+    public static abstract class AdFetchResult {
 
         WeakReference<AdView> mWeakAdView;
         public AdFetchResult(AdView adView) {

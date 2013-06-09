@@ -182,7 +182,7 @@ public class AdView extends WebView {
         return mMoPubView;
     }
 
-    private class AdWebViewClient extends WebViewClient {
+    public class AdWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             AdView adView = (AdView) view;

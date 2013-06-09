@@ -48,10 +48,10 @@ public class MoPubInterstitial {
     
     private enum InterstitialState { HTML_AD_READY, NATIVE_AD_READY, NOT_READY };
     
-    private MoPubInterstitialView mInterstitialView;
+    public MoPubInterstitialView mInterstitialView;
     private BaseInterstitialAdapter mInterstitialAdapter;
     private InterstitialAdListener mInterstitialAdListener;
-    private Activity mActivity;
+    public Activity mActivity;
     private String mAdUnitId;
     private BaseInterstitialAdapterListener mAdapterListener;
     private DefaultInterstitialAdapterListener mDefaultAdapterListener;
@@ -171,7 +171,7 @@ public class MoPubInterstitial {
         }
     }
     
-    private void showHtmlInterstitial() {
+    protected void showHtmlInterstitial() {
         String responseString = mInterstitialView.getResponseString();
         Intent i = new Intent(mActivity, MoPubActivity.class);
         i.putExtra("com.mopub.mobileads.AdUnitId", mAdUnitId);

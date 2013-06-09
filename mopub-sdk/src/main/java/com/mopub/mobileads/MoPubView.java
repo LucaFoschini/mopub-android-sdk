@@ -69,7 +69,7 @@ public class MoPubView extends FrameLayout {
     public static final String AD_HANDLER = "/m/ad";
     public static final int DEFAULT_LOCATION_PRECISION = 6;
 
-    protected AdView mAdView;
+    public AdView mAdView;
     protected BaseAdapter mAdapter;
     
     private Context mContext;
@@ -276,7 +276,7 @@ public class MoPubView extends FrameLayout {
         }
     }
     
-    protected void loadHtmlString(String html) {
+    public void loadHtmlString(String html) {
         if (mAdView != null) mAdView.loadResponseString(html);
     }
     

@@ -101,8 +101,8 @@ public class MoPubActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         broadcastInterstitialAction(ACTION_INTERSTITIAL_DISMISS);
-        
-        mMoPubView.destroy();
+        if (mMoPubView != null)
+        	mMoPubView.destroy();
         super.onDestroy();
     }
     
