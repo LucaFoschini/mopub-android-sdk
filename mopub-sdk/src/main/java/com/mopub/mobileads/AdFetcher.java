@@ -206,19 +206,20 @@ public class AdFetcher {
         }
 
         public AdFetchResult fetch(String url) throws Exception {
-        	// remove id and put it in post
-        	
-        	Pattern p = Pattern.compile("(?<=[?&;])(id=.*?)($|[&;])");
-        	Matcher m = p.matcher(url);
-        	String idvalue = null;
-        	if (m.find()) {
-        		idvalue = m.group(1);
-        		Log.d("MoPub", "Find the group: "+idvalue);
-        	} else
-        		Log.d("MoPub", "Group not found in the URL");
 
-        	url = m.replaceAll("");
-        	
+	    // change id parameter into achievemint_data and place that in a post	    
+	    
+	    Pattern p = Pattern.compile("(?<=[?&;])id=(.*?)($|[&;])");
+	    Matcher m = p.matcher(url);
+	    String idvalue = null;
+	    if (m.find()) {
+		idvalue = "achievemint_data=" + m.group(1);
+		Log.d("MoPub", "Find the group: " + idvalue);
+	    } else
+		Log.d("MoPub", "Group not found in the URL");
+	    
+	    url = m.replaceAll("");
+
             HttpPost httppost = new HttpPost(url);
             httppost.addHeader(USER_AGENT_HEADER, mAdFetcher.mUserAgent);
             httppost.addHeader("Content-Type",  "application/x-www-form-urlencoded");
