@@ -51,6 +51,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
@@ -160,6 +161,7 @@ public class AdView extends WebView {
         final class MoPubUriJavascriptInterface {
             // This method appears to be unused, since it will only be called from JavaScript.
             @SuppressWarnings("unused")
+            @JavascriptInterface
             public boolean fireFinishLoad() {
                 AdView.this.postHandlerRunnable(new Runnable() {
                     @Override
@@ -185,6 +187,7 @@ public class AdView extends WebView {
     public class AdWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        	Log.d("jon - mopub","starting url overide:" + url);
             AdView adView = (AdView) view;
             
             // Handle the special mopub:// scheme calls.
