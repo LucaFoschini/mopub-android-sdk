@@ -187,7 +187,6 @@ public class AdView extends WebView {
     public class AdWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        	Log.d("jon - mopub","starting url overide:" + url);
             AdView adView = (AdView) view;
             
             // Handle the special mopub:// scheme calls.
