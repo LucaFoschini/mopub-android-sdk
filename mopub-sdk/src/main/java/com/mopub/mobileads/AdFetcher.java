@@ -238,16 +238,22 @@ public class AdFetcher {
             }
 
             HttpResponse response = mHttpClient.execute(httppost);
-            HttpEntity entity = response.getEntity();
 
-            if (response == null || entity == null) {
+            if (response == null) {     	
                 Log.d("MoPub", "MoPub server returned null response.");
                 mFetchStatus = FetchStatus.INVALID_SERVER_RESPONSE_NOBACKOFF;
                 return null;
             }
 
+            HttpEntity entity = response.getEntity();
             final int statusCode = response.getStatusLine().getStatusCode();
 
+            if (entity == null && statusCode == 304){
+                Log.d("MoPub", "Server returned Not Modified");
+                mFetchStatus = FetchStatus.FETCH_CANCELLED;
+            	return null;
+            }
+            
             // Client and Server HTTP errors should result in an exponential backoff
             if (statusCode >= 400) {
                 Log.d("MoPub", "Server error: returned HTTP status code " + Integer.toString(statusCode) +

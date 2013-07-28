@@ -773,7 +773,7 @@ public class AdView extends WebView {
                     + " in your Android manifest file.");
 
             getContext().startActivity(
-                    new Intent(Intent.ACTION_VIEW, Uri.parse("about:blank"))
+                    new Intent(Intent.ACTION_VIEW, Uri.parse(url))
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
